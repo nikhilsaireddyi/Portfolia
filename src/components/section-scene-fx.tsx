@@ -43,7 +43,6 @@ export function SectionSceneFX() {
       document.documentElement.style.setProperty("--scene-progress", `${local}`);
       return { active, local };
     };
-
     const hero = (p: number, e: number) => {
       const cx = w * .77 + (mx - w / 2) * .04, cy = h * .48 + (my - h / 2) * .025;
       glow(cx, cy, 260 + e * 100, 188, .11 + e * .06);
@@ -89,5 +88,5 @@ export function SectionSceneFX() {
     return () => { cancelAnimationFrame(raf); window.removeEventListener("resize", resize); window.removeEventListener("pointermove", pointer); };
   }, []);
 
-  return <canvas ref={canvasRef} className="section-scene-fx" aria-hidden="true" />;
+  return <canvas ref={canvasRef} className="pointer-events-none fixed inset-0 z-[1] h-full w-full opacity-90" aria-hidden="true" />;
 }
