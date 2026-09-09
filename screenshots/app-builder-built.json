@@ -1,0 +1,38 @@
+{
+  "url": "http://127.0.0.1:8081/",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "Kiran Vale — CSE · AI & ML",
+      "hasCanvas": false,
+      "bodyTextLen": 3487,
+      "bodyTextHash": "d784afb8df1a623684d1ea94ceb8d853b42c07a089521ecc124b12a8637090ad",
+      "bodyTextPrefix": "Skip to content KV Kiran Vale About Work Skills Contact Get in t",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-built.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "Kiran Vale — CSE · AI & ML",
+      "hasCanvas": false,
+      "bodyTextLen": 3474,
+      "bodyTextHash": "e797eb193ee17d9eee68e0da8ed54aaaf7b16d95dd5386fb5c75e55c33955636",
+      "bodyTextPrefix": "Skip to content KV Kiran Vale About 01 Work 02 Skills 03 Contact",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-built-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/app-builder-built.json",
+  "divergesFromBaseline": false,
+  "baselineReasons": []
+}
