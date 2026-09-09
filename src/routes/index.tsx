@@ -6,6 +6,7 @@ import { CinematicBackground } from "@/components/cinematic-background";
 import { ContactSection } from "@/components/contact-section";
 import { Hero } from "@/components/hero";
 import { SectionRail } from "@/components/section-rail";
+import { SectionSceneFX } from "@/components/section-scene-fx";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { SkillsSection } from "@/components/skills-section";
@@ -20,11 +21,7 @@ function Home() {
   useEffect(() => {
     const elements = document.querySelectorAll<HTMLElement>(".reveal");
     const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) entry.target.classList.add("is-visible");
-        });
-      },
+      (entries) => entries.forEach((entry) => entry.isIntersecting && entry.target.classList.add("is-visible")),
       { threshold: 0.08, rootMargin: "0px 0px -90px 0px" },
     );
     elements.forEach((element) => observer.observe(element));
@@ -33,7 +30,6 @@ function Home() {
     let lastScroll = window.scrollY;
     let lastTime = performance.now();
     let velocity = 0;
-
     const updateScrollScene = () => {
       const now = performance.now();
       const scrollY = window.scrollY;
@@ -42,33 +38,22 @@ function Home() {
       const dt = Math.max(16, now - lastTime);
       const rawVelocity = Math.abs(scrollY - lastScroll) / dt;
       velocity += (Math.min(1, rawVelocity * 2.8) - velocity) * 0.18;
-
       document.documentElement.style.setProperty("--scroll-y", `${scrollY}px`);
       document.documentElement.style.setProperty("--scroll-progress", `${progress}`);
       document.documentElement.style.setProperty("--scroll-velocity", `${velocity}`);
       document.documentElement.style.setProperty("--scroll-angle", `${scrollY * 0.035}deg`);
-
       document.querySelectorAll<HTMLElement>("[data-parallax]").forEach((element) => {
         const speed = Number(element.dataset.parallax ?? 0);
         element.style.transform = `translate3d(0, ${scrollY * speed}px, 0)`;
       });
-
       lastScroll = scrollY;
       lastTime = now;
       ticking = false;
     };
-
-    const onScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(updateScrollScene);
-        ticking = true;
-      }
-    };
-
+    const onScroll = () => { if (!ticking) { requestAnimationFrame(updateScrollScene); ticking = true; } };
     updateScrollScene();
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll, { passive: true });
-
     return () => {
       observer.disconnect();
       window.removeEventListener("scroll", onScroll);
@@ -79,6 +64,7 @@ function Home() {
   return (
     <div className="min-h-svh bg-bg text-fg">
       <CinematicBackground />
+      <SectionSceneFX />
       <div className="scroll-progress"><span /></div>
       <a href="#about" className="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-50 focus:rounded-md focus:bg-accent focus:px-3 focus:py-2 focus:text-accent-fg">Skip to content</a>
       <SiteHeader active={active} />
