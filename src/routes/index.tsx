@@ -19,8 +19,6 @@ function Home() {
 
   useEffect(() => {
     const elements = document.querySelectorAll<HTMLElement>(".reveal");
-    if (!elements.length) return;
-
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -32,18 +30,31 @@ function Home() {
     elements.forEach((element) => observer.observe(element));
 
     let ticking = false;
+    let lastScroll = window.scrollY;
+    let lastTime = performance.now();
+    let velocity = 0;
+
     const updateScrollScene = () => {
+      const now = performance.now();
       const scrollY = window.scrollY;
       const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
       const progress = Math.min(1, scrollY / maxScroll);
+      const dt = Math.max(16, now - lastTime);
+      const rawVelocity = Math.abs(scrollY - lastScroll) / dt;
+      velocity += (Math.min(1, rawVelocity * 2.8) - velocity) * 0.18;
+
       document.documentElement.style.setProperty("--scroll-y", `${scrollY}px`);
       document.documentElement.style.setProperty("--scroll-progress", `${progress}`);
+      document.documentElement.style.setProperty("--scroll-velocity", `${velocity}`);
+      document.documentElement.style.setProperty("--scroll-angle", `${scrollY * 0.035}deg`);
 
       document.querySelectorAll<HTMLElement>("[data-parallax]").forEach((element) => {
         const speed = Number(element.dataset.parallax ?? 0);
         element.style.transform = `translate3d(0, ${scrollY * speed}px, 0)`;
       });
 
+      lastScroll = scrollY;
+      lastTime = now;
       ticking = false;
     };
 
